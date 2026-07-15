@@ -1,0 +1,39 @@
+-- Criação das Tabelas Principais
+CREATE TABLE cervejas (
+    id_cerveja INT PRIMARY KEY,
+    nome_cerveja VARCHAR(100) NOT NULL,
+    caracteristicas TEXT
+);
+
+CREATE TABLE insumos (
+    id_materia_prima INT PRIMARY KEY,
+    nome_insumo VARCHAR(100) NOT NULL,
+    tipo_variedade VARCHAR(100),
+    sigla_unidade VARCHAR(10)
+);
+
+CREATE TABLE equipamentos (
+    id_equipamento VARCHAR(10) PRIMARY KEY,
+    nome_maquina VARCHAR(100),
+    etapa_processo VARCHAR(100),
+    capacidade VARCHAR(20)
+);
+
+-- Tabela de Vendas (A que nós arrumamos!)
+CREATE TABLE vendas (
+    id_venda INT PRIMARY KEY,
+    id_cerveja INT,
+    quantidade_barris INT,
+    valor_total DECIMAL(10,2),
+    FOREIGN KEY (id_cerveja) REFERENCES cervejas(id_cerveja)
+);
+
+-- Tabela de Receitas (A ligação entre cerveja e insumo que está no seu Excel)
+CREATE TABLE receita_insumo (
+    id_receita_insumo INT PRIMARY KEY,
+    id_cerveja INT,
+    id_materia_prima INT,
+    quantidade INT,
+    FOREIGN KEY (id_cerveja) REFERENCES cervejas(id_cerveja),
+    FOREIGN KEY (id_materia_prima) REFERENCES insumos(id_materia_prima)
+);
